@@ -64,14 +64,14 @@ class Solution { // 3 steps, build adjacency list, merge accounts for a user, so
         visited.add(email); // add current email to visited
         mergedAccount.add(email); // add email to complete merged list for user
 
-        if (!adjacent.containsKey(email)) { // i'm not sure how this would happen? all emails should be a key to store edges/neighbors
-            return; // without this though gets null pointer exception since email is null? how?
+        if (!adjacent.containsKey(email)) { // this is needed in case where email never added to adjacency list since only
+            return; // one email and creation of edge starts in for loop i = 2. so single email is not in visited and
+            // gets passed to DFS, but just return since no DFS needed
         }
 
         for (String neighbor : adjacent.get(email)) { // will explore all spokes, understanding that one of the emails will
             if (!visited.contains(neighbor)) { // be a spoke for multiple cogs
                 DFS(mergedAccount, neighbor); // and by searching that common spoke, will DFS the whole neighboring 'wheel'
-                // related to above return statement, how would a null ever be passed from adjacency list?
             }
         }
     }
